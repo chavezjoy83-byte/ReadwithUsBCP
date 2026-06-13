@@ -52,24 +52,46 @@
         tableBody.innerHTML = ""; 
 
         if (records.length === 0) {
-            tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No records found.</td></tr>";
+            tableBody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No records found.</td></tr>";
         } else {
-            records.forEach(student => {
+            records.forEach((student, index) => {
                 let row = tableBody.insertRow(-1);
                 row.innerHTML = `
+                    <td style="text-align: center;"><input type="checkbox" class="record-checkbox" data-index="${index}"></td>
                     <td>${student.name}</td>
                     <td>${student.activity}</td>
                     <td>${student.date}</td>
-                    <td style="text-align: center;">${student.score}</td> 
+                    <td style="text-align: center;">${student.score}</td>
                 `;
             });
         }
     }
 
+    function deleteSelected() {
+        let checkboxes = document.querySelectorAll('.record-checkbox');
+        let selected = [];
+
+        checkboxes.forEach(box => {
+            if (box.checked) selected.push(Number(box.dataset.index));
+        });
+
+        if (selected.length === 0) {
+            alert('Please select at least one record to delete.');
+            return;
+        }
+
+        if (!confirm(`Delete ${selected.length} selected record(s)?`)) return;
+
+        let records = JSON.parse(localStorage.getItem('quizRecords') || "[]");
+        let remaining = records.filter((_, index) => !selected.includes(index));
+        localStorage.setItem('quizRecords', JSON.stringify(remaining));
+        loadRecords();
+    }
+
     function clearData() {
         if(confirm("Are you sure you want to delete all student records?")) {
             localStorage.removeItem('quizRecords');
-            location.reload();
+            loadRecords();
         }
     }
 
