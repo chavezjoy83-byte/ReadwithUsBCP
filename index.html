@@ -67,22 +67,10 @@
             box-shadow: 0 0 20px white;
             transform: scale(1.05);
         }
-    </style>
-    <script>
-        const currentUser = localStorage.getItem('currentUser');
-        if (!currentUser) {
-            window.location.href = 'login.html';
-        }
-    </script>
 </head>
 <body>
     <h1 id="welcomeUser">Welcome!</h1>
-    <script>
-        const name = localStorage.getItem('currentUser');
-        if (name) {
-            document.getElementById('welcomeUser').innerText = 'Welcome, ' + name + '!';
-        }
-    </script>
+    
 
     <div class="content-box">
         <h1>ReadwithUs</h1>
