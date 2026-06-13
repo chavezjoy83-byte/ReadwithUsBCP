@@ -149,26 +149,28 @@
         document.getElementById('name-input').value = name === 'Anonymous' ? '' : name;
     }
 
-    // Name edit handlers
-    document.getElementById('edit-name-btn').addEventListener('click', () => {
-        document.getElementById('name-edit').style.display = 'block';
-        document.getElementById('name-input').focus();
-    });
+    function initQuiz() {
+        showUserName();
+        document.getElementById('edit-name-btn').addEventListener('click', () => {
+            document.getElementById('name-edit').style.display = 'block';
+            document.getElementById('name-input').focus();
+        });
 
-    document.getElementById('save-name').addEventListener('click', () => {
-        let v = (document.getElementById('name-input').value || '').trim();
-        if (v) {
-            localStorage.setItem('currentUser', v);
-            document.getElementById('user-name').innerText = 'Player: ' + v;
-            document.getElementById('name-edit').style.display = 'none';
-        } else {
-            alert('Please enter a name');
-        }
-    });
+        document.getElementById('save-name').addEventListener('click', () => {
+            let v = (document.getElementById('name-input').value || '').trim();
+            if (v) {
+                localStorage.setItem('currentUser', v);
+                document.getElementById('user-name').innerText = 'Player: ' + v;
+                document.getElementById('name-edit').style.display = 'none';
+            } else {
+                alert('Please enter a name');
+            }
+        });
+
+        loadQuestion();
     }
 
-    showUserName();
-    loadQuestion();
+    document.addEventListener('DOMContentLoaded', initQuiz());
 </script>
 
 </body>
